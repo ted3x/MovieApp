@@ -18,10 +18,10 @@ object RetrofitClient {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/3/")
+        .baseUrl("https://api.themoviedb.org/3/movie/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    var service: ApiService = retrofit.create(ApiService::class.java)
+    val service: ApiService = retrofit.create(ApiService::class.java)
 }
