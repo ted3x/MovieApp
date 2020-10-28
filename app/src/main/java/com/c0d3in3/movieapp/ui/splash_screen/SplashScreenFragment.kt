@@ -10,26 +10,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 
 import com.c0d3in3.movieapp.R
-import com.c0d3in3.movieapp.ui.SharedViewModel
+import com.c0d3in3.movieapp.ui.MoviesViewModel
 
 
 class SplashScreenFragment : Fragment() {
 
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var moviesViewModel: MoviesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         activity?.let {
-            sharedViewModel = ViewModelProvider(it)[SharedViewModel::class.java]
+            moviesViewModel = ViewModelProvider(it)[MoviesViewModel::class.java]
         }
         return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val navController = Navigation.findNavController(view)
-        sharedViewModel.isDataLoaded.observe(viewLifecycleOwner, Observer{
+        moviesViewModel.isDataLoaded.observe(viewLifecycleOwner, Observer{
             activity?.setTheme(R.style.AppTheme)
             if(it) navController.navigate(R.id.action_splashScreenFragment_to_moviesDashboardFragment)
         })

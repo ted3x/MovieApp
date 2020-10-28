@@ -7,9 +7,9 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.c0d3in3.movieapp.ui.MainActivity"
+        android:name="com.c0d3in3.movieapp.ui.MovieActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_movie" />
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.c0d3in3.movieapp.ui.splash_screen.SplashScreenFragment"

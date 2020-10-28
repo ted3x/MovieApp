@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.logging.Handler
 
-class SharedViewModel : ViewModel() {
+class MoviesViewModel : ViewModel() {
 
-    val isDataLoaded: MutableLiveData<Boolean> = MutableLiveData()
+    val isDataLoaded = MutableLiveData<Boolean>()
 
     init {
         isDataLoaded.value = false
