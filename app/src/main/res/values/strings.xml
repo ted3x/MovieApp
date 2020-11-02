@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">MovieApp</string>
-
+    <string name="favorites">Favorites</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top rated</string>
+    <string-array name="movies_type">
+        <item>Top rated</item>
+        <item>Popular</item>
+        <item>Favorites</item>
+    </string-array>
 </resources>

@@ -15,5 +15,6 @@ class MovieActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie)
 
         moviesViewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
+        moviesViewModel.fetchData()
     }
 }

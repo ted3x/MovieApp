@@ -3,7 +3,7 @@ package com.c0d3in3.movieapp.models.network
 import com.google.gson.annotations.SerializedName
 
 
-data class Movie (
+data class MovieDetailed (
 
     val adult : Boolean,
     @SerializedName("backdrop_path") val backdropPath : String?,
