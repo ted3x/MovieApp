@@ -7,6 +7,7 @@ import com.c0d3in3.movieapp.data.local.repository.MovieRepositoryImpl
 import com.c0d3in3.movieapp.data.remote.RetrofitClient
 import com.c0d3in3.movieapp.models.entity.Movie
 import com.c0d3in3.movieapp.models.network.MovieCollection
+import com.c0d3in3.movieapp.models.network.MovieDetailed
 import com.c0d3in3.movieapp.ui.movies_dashboard.MovieTypes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,6 +23,9 @@ class MoviesViewModel : ViewModel() {
     private val selectedMoviesType = MutableLiveData<MovieTypes>()
     private val currentPage = MutableLiveData<Int>()
     private val repository = MovieRepositoryImpl()
+
+    val movie = MutableLiveData<Movie>()
+    val errorMessage = MutableLiveData<String>()
 
     init {
         isDataLoaded.value = false
@@ -48,6 +52,7 @@ class MoviesViewModel : ViewModel() {
             MovieTypes.POPULAR -> {
                 RetrofitClient.service.getPopularMovies(currentPage.value!!).enqueue(object: Callback<MovieCollection>{
                     override fun onFailure(call: Call<MovieCollection>, t: Throwable) {
+                        errorMessage.value = t.toString()
                     }
 
                     override fun onResponse(

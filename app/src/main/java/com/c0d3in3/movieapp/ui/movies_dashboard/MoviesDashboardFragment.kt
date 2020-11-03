@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.c0d3in3.movieapp.R
@@ -18,23 +21,22 @@ import com.c0d3in3.movieapp.ui.movies_dashboard.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies_dashboard.*
 
 
-class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener  {
+class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener, MoviesListener  {
 
     private lateinit var adapter: MoviesAdapter
-    private lateinit var moviesViewModel : MoviesViewModel
+    private val viewModel by activityViewModels<MoviesViewModel>()
+    private lateinit var navController:NavController
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.let {
-            moviesViewModel = ViewModelProvider(it)[MoviesViewModel::class.java]
-        }
         return inflater.inflate(R.layout.fragment_movies_dashboard, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        navController = Navigation.findNavController(view)
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.movies_type,
@@ -44,10 +46,10 @@ class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener  
             moviesSpinner.adapter = adapter
         }
         moviesSpinner.onItemSelectedListener = this
-        moviesViewModel.moviesList.observe(viewLifecycleOwner, Observer{
+        viewModel.moviesList.observe(viewLifecycleOwner, Observer{
             println("size ${it.size}")
             adapter = MoviesAdapter()
-            adapter.setMovieList(it)
+            adapter.setMovieList(it, this)
             moviesRecyclerView.layoutManager = GridLayoutManager(context, 3)
             moviesRecyclerView.adapter = adapter
         })
@@ -61,9 +63,9 @@ class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener  
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (parent != null) {
             when(parent.getItemAtPosition(position).toString()){
-                getString(R.string.top_rated) -> moviesViewModel.setMoviesType(MovieTypes.TOP_RATED)
-                getString(R.string.popular) -> moviesViewModel.setMoviesType(MovieTypes.POPULAR)
-                getString(R.string.favorites) -> moviesViewModel.setMoviesType(MovieTypes.FAVORITES)
+                getString(R.string.top_rated) -> viewModel.setMoviesType(MovieTypes.TOP_RATED)
+                getString(R.string.popular) -> viewModel.setMoviesType(MovieTypes.POPULAR)
+                getString(R.string.favorites) -> viewModel.setMoviesType(MovieTypes.FAVORITES)
             }
         }
     }
@@ -73,5 +75,10 @@ class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener  
             activity?.finish()
         }
         super.onCreate(savedInstanceState)
+    }
+
+    override fun openDetailedMovie(position: Int) {
+        viewModel.movie.value = viewModel.moviesList.value?.get(position)
+        navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
     }
 }

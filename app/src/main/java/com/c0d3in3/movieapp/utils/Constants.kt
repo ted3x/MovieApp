@@ -1,4 +1,4 @@
-package com.c0d3in3.movieapp
+package com.c0d3in3.movieapp.utils
 
 object Constants {
     const val SPLASH_SCREEN_DELAY: Long = 2500

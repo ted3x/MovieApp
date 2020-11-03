@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.extensions.setImage
 import com.c0d3in3.movieapp.models.entity.Movie
+import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesDashboardFragment
+import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     private var moviesList = listOf<Movie>()
+    private lateinit var listener: MoviesListener
 
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -24,9 +27,13 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val imageView = holder.itemView as ImageView
         imageView.setImage(moviesList[position].posterPath)
+        imageView.setOnClickListener {
+            listener.openDetailedMovie(position)
+        }
     }
 
-    fun setMovieList(mList: List<Movie>){
+    fun setMovieList(mList: List<Movie>, fragment: MoviesDashboardFragment){
         moviesList = mList
+        listener = fragment
     }
 }

@@ -5,13 +5,12 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.c0d3in3.movieapp.Constants.SPLASH_SCREEN_DELAY
+import com.c0d3in3.movieapp.utils.Constants.SPLASH_SCREEN_DELAY
 import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.ui.MoviesViewModel
 

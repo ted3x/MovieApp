@@ -3,6 +3,7 @@
     <string name="favorites">Favorites</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top rated</string>
+    <string name="overview">OVERVIEW</string>
     <string-array name="movies_type">
         <item>Top rated</item>
         <item>Popular</item>
