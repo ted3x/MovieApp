@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.extensions.setImage
+import com.c0d3in3.movieapp.ui.MovieActivity
 import com.c0d3in3.movieapp.ui.MoviesViewModel
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
@@ -31,6 +32,7 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
         viewModel.movie.observe(viewLifecycleOwner, Observer{
+            (activity as MovieActivity).setToolbarTitle(it.title, true)
             backDropPoster.setImage(it.posterPath)
             releaseDate.text = "Release date: ${it.releaseDate}"
             rating.text = it.voteAverage.toString()
