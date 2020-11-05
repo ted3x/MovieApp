@@ -1,35 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.MovieActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:gravity="center"
-        android:background="#222"
-        android:visibility="gone"
-        android:layout_height="?attr/actionBarSize"/>
-
     <fragment
-        android:id="@+id/nav_host_fragment"
+        android:id="@+id/frame_layout"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/messageLayout"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_height="30dp"
+        android:layout_gravity="bottom"
         android:layout_marginVertical="10dp"
         android:background="#fff">
 
@@ -41,4 +31,4 @@
             android:textColor="#000"/>
 
     </FrameLayout>
-</LinearLayout>
+</FrameLayout>

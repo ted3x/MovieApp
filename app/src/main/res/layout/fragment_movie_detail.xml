@@ -23,7 +23,6 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/overviewTextView"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -40,8 +39,6 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
             app:layout_constraintEnd_toStartOf="@id/rating"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/backDropPoster"
@@ -53,8 +50,6 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/originalTitle"
             tools:text="Release date: 2020/02/22" />
@@ -62,7 +57,6 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
-            android:layout_marginEnd="10dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_rating"
             android:drawablePadding="10dp"
@@ -81,7 +75,6 @@
             android:layout_marginTop="20dp"
             android:textColor="#000"
             android:textSize="16sp"
-            android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/overviewTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>

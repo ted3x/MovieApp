@@ -1,20 +1,21 @@
 package com.c0d3in3.movieapp.ui.movies_dashboard
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+
 import com.c0d3in3.movieapp.R
-import com.c0d3in3.movieapp.ui.MovieActivity
 import com.c0d3in3.movieapp.ui.MoviesViewModel
 import com.c0d3in3.movieapp.ui.movies_dashboard.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies_dashboard.*
@@ -35,7 +36,6 @@ class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener, 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as MovieActivity).setToolbarTitle("Dashboard", false)
         navController = Navigation.findNavController(view)
         ArrayAdapter.createFromResource(
             requireContext(),
