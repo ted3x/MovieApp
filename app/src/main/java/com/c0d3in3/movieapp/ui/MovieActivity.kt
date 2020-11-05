@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.c0d3in3.movieapp.R
+import com.c0d3in3.movieapp.utils.Constants.ERROR_MESSAGE_DELAY
 import kotlinx.android.synthetic.main.activity_movie.*
 import kotlinx.android.synthetic.main.activity_movie.view.*
 
@@ -30,8 +31,7 @@ class MovieActivity : AppCompatActivity() {
         moviesViewModel.errorMessage.observe(this, Observer{
             messageLayout.visibility = View.VISIBLE
             messageLayout.message.text = it
-            messageLayout.visibility = View.VISIBLE
-            Handler().postDelayed({messageLayout.visibility = View.GONE}, 2500)
+            Handler().postDelayed({messageLayout.visibility = View.GONE}, ERROR_MESSAGE_DELAY)
         })
     }
 
