@@ -24,4 +24,7 @@ data class Movie (
 
     @SerializedName("vote_average")
     @ColumnInfo(name="vote_average") val voteAverage : Double
-)
+){
+    val posterUrl
+        get() = "https://image.tmdb.org/t/p/original$posterPath"
+}

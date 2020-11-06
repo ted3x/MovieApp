@@ -67,6 +67,7 @@ class MoviesViewModel : ViewModel() {
             MovieTypes.TOP_RATED -> {
                 RetrofitClient.service.getTopRatedMovies(currentPage.value!!).enqueue(object: Callback<MovieCollection>{
                     override fun onFailure(call: Call<MovieCollection>, t: Throwable) {
+                        errorMessage.value = t.toString()
                     }
 
                     override fun onResponse(

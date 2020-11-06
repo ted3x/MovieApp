@@ -50,9 +50,10 @@ class MoviesDashboardFragment : Fragment(), AdapterView.OnItemSelectedListener, 
             println("size ${it.size}")
             adapter = MoviesAdapter()
             adapter.setMovieList(it, this)
-            moviesRecyclerView.layoutManager = GridLayoutManager(context, 3)
             moviesRecyclerView.adapter = adapter
         })
+
+        moviesRecyclerView.layoutManager = GridLayoutManager(context, 3)
         super.onViewCreated(view, savedInstanceState)
     }
 

@@ -31,7 +31,7 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
         viewModel.movie.observe(viewLifecycleOwner, Observer{
-            backDropPoster.setImage(it.posterPath)
+            backDropPoster.setImage(it.posterUrl)
             releaseDate.text = "Release date: ${it.releaseDate}"
             rating.text = it.voteAverage.toString()
             originalTitle.text = "Original title: ${it.originalTitle}"

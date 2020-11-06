@@ -14,7 +14,7 @@ import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     private var moviesList = listOf<Movie>()
-    private lateinit var listener: MoviesListener
+    private lateinit var moviesListener: MoviesListener
 
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -26,14 +26,14 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val imageView = holder.itemView as ImageView
-        imageView.setImage(moviesList[position].posterPath)
+        imageView.setImage(moviesList[position].posterUrl)
         imageView.setOnClickListener {
-            listener.openDetailedMovie(position)
+            moviesListener.openDetailedMovie(position)
         }
     }
 
     fun setMovieList(mList: List<Movie>, fragment: MoviesDashboardFragment){
         moviesList = mList
-        listener = fragment
+        moviesListener = fragment
     }
 }
