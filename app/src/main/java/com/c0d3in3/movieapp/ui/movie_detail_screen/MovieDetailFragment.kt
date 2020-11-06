@@ -33,7 +33,7 @@ class MovieDetailFragment : Fragment() {
         navController = Navigation.findNavController(view)
         viewModel.movie.observe(viewLifecycleOwner, Observer{
             (activity as MovieActivity).setToolbarTitle(it.title, true)
-            backDropPoster.setImage(it.posterPath)
+            backDropPoster.setImage(it.posterUrl)
             releaseDate.text = "Release date: ${it.releaseDate}"
             rating.text = it.voteAverage.toString()
             originalTitle.text = "Original title: ${it.originalTitle}"
