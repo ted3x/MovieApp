@@ -26,7 +26,8 @@
         tools:layout="@layout/fragment_movies_dashboard" >
         <action
             android:id="@+id/action_moviesDashboardFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movieDetailFragment"
+            app:popUpTo="@id/moviesDashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
