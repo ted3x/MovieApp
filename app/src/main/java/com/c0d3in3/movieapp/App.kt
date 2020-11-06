@@ -1,20 +1,23 @@
 package com.c0d3in3.movieapp
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.c0d3in3.movieapp.data.local.AppDatabase
+import com.c0d3in3.movieapp.utils.Constants
 
 class App : Application() {
 
-    private lateinit var roomDatabase: RoomDatabase
+
+    companion object{
+        val roomDatabase: AppDatabase by lazy{
+            AppDatabase.build(context)
+        }
+        private lateinit var context : Context
+    }
 
     override fun onCreate() {
+        context = this
         super.onCreate()
-
-        roomDatabase = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
     }
 }
