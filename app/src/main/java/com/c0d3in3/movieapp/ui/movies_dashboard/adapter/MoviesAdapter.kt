@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +32,9 @@ class MoviesAdapter(private val listener: MoviesListener) :
         val imageView = holder.itemView as ImageView
         item?.posterUrl?.let { imageView.setImage(it) }
         imageView.setOnClickListener {
-            listener.openDetailedMovie(position)
+            var pos = position
+            if(position >= itemCount) pos--
+            listener.openDetailedMovie(pos)
         }
     }
 

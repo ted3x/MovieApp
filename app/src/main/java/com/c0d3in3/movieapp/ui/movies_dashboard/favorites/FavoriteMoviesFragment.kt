@@ -24,7 +24,7 @@ class FavoriteMoviesFragment : Fragment(), MoviesListener {
     private lateinit var adapter : MoviesAdapter
     private lateinit var navController: NavController
     private lateinit var viewModel : FavoriteMoviesViewModel
-    private var check = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,11 +49,8 @@ class FavoriteMoviesFragment : Fragment(), MoviesListener {
     }
 
     override fun openDetailedMovie(position: Int) {
-        var pos = position
-        if(position >= viewModel.moviesList.value?.size!!) pos -= 1 // თუ მოხდა ფავორიტებიდან აითემის წაშლა და ინდექსაცია არ შეიცვალა
-                                                                    // ვაქასთომებთ პოზიციას
         val parent = parentFragment as MoviesDashboardFragment
-        parent.setSelectedMovie(viewModel.moviesList.value?.get(pos))
+        parent.setSelectedMovie(viewModel.moviesList.value?.get(position))
         navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
     }
 }
