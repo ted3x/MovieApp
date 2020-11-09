@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.c0d3in3.movieapp.R
@@ -16,7 +17,7 @@ import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesDashboardFragment
 import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 
 class MoviesAdapter(private val listener: MoviesListener) :
-    PagedListAdapter<Movie, MoviesAdapter.MoviesViewHolder>(DiffUtilCallBack()) {
+    PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(DiffUtilCallBack()) {
 
 
     class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -32,9 +33,7 @@ class MoviesAdapter(private val listener: MoviesListener) :
         val imageView = holder.itemView as ImageView
         item?.posterUrl?.let { imageView.setImage(it) }
         imageView.setOnClickListener {
-            var pos = position
-            if(position >= itemCount) pos--
-            listener.openDetailedMovie(pos)
+            listener.openDetailedMovie(item)
         }
     }
 

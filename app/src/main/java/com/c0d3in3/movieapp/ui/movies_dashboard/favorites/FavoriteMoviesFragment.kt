@@ -7,17 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.c0d3in3.movieapp.R
+import com.c0d3in3.movieapp.models.entity.Movie
 import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesDashboardFragment
 import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 import com.c0d3in3.movieapp.ui.movies_dashboard.adapter.MoviesAdapter
 import com.c0d3in3.movieapp.ui.movies_dashboard.popular.PopularMoviesViewModel
 import kotlinx.android.synthetic.main.fragment_favorite_movies.*
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class FavoriteMoviesFragment : Fragment(), MoviesListener {
 
@@ -42,15 +46,18 @@ class FavoriteMoviesFragment : Fragment(), MoviesListener {
         favoritesRV.layoutManager = GridLayoutManager(context, 3)
         favoritesRV.adapter = adapter
 
-        viewModel.moviesList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.movies.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun openDetailedMovie(position: Int) {
+    override fun openDetailedMovie(movie: Movie?) {
         val parent = parentFragment as MoviesDashboardFragment
-        parent.setSelectedMovie(viewModel.moviesList.value?.get(position))
+        parent.setSelectedMovie(movie)
         navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
     }
 }
