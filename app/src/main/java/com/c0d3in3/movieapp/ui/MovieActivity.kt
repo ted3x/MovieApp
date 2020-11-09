@@ -3,6 +3,7 @@ package com.c0d3in3.movieapp.ui
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,6 +14,8 @@ import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.utils.Constants.ERROR_MESSAGE_DELAY
 import kotlinx.android.synthetic.main.activity_movie.*
 import kotlinx.android.synthetic.main.activity_movie.view.*
+import kotlinx.android.synthetic.main.custom_toolbar_layout.*
+import kotlinx.android.synthetic.main.custom_toolbar_layout.view.*
 
 class MovieActivity : AppCompatActivity() {
 
@@ -22,11 +25,10 @@ class MovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbarLayout.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)
-
-        moviesViewModel.fetchData()
 
         moviesViewModel.errorMessage.observe(this, Observer{
             messageLayout.visibility = View.VISIBLE
@@ -36,8 +38,9 @@ class MovieActivity : AppCompatActivity() {
     }
 
     fun setToolbarTitle(title: String, enableBackButton: Boolean){
-        if(toolbar.visibility == View.GONE) toolbar.visibility = View.VISIBLE
-        toolbar.title = title
+        val toolbarTV = findViewById<TextView>(R.id.toolbarTV)
+        if(toolbarLayout.visibility == View.GONE) toolbarLayout.visibility = View.VISIBLE
+        toolbarTV.text = title
         supportActionBar?.setDisplayHomeAsUpEnabled(enableBackButton)
     }
 

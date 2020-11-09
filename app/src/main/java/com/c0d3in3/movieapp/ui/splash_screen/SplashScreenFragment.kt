@@ -17,17 +17,15 @@ import com.c0d3in3.movieapp.ui.MoviesViewModel
 
 class SplashScreenFragment : Fragment() {
 
-    private var startTime = System.currentTimeMillis()
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var handler: Handler
     private lateinit var navController: NavController
-    private val runnable = Runnable{
-        navController.navigate(R.id.action_splashScreenFragment_to_moviesDashboardFragment)
-    }
+    private lateinit var runnable: Runnable
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        handler = Handler()
         activity?.let {
             moviesViewModel = ViewModelProvider(it)[MoviesViewModel::class.java]
         }
@@ -36,29 +34,19 @@ class SplashScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
-        moviesViewModel.isDataLoaded.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                if (System.currentTimeMillis() - startTime > SPLASH_SCREEN_DELAY) navController.navigate(
-                    R.id.action_splashScreenFragment_to_moviesDashboardFragment
-                )
-                else {
-                    handler = Handler()
-                    handler.postDelayed(runnable, SPLASH_SCREEN_DELAY - (System.currentTimeMillis() - startTime))
-                }
-            }
-        })
+        runnable = Runnable{
+            navController.navigate(R.id.action_splashScreenFragment_to_moviesDashboardFragment)
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onPause() {
-        if (moviesViewModel.isDataLoaded.value!!)
-            handler.removeCallbacks(runnable)
+        handler.removeCallbacks(runnable)
         super.onPause()
     }
 
     override fun onResume() {
-        if (moviesViewModel.isDataLoaded.value!!)
-            handler.postDelayed(runnable, SPLASH_SCREEN_DELAY - (System.currentTimeMillis() - startTime))
+        handler.postDelayed(runnable, SPLASH_SCREEN_DELAY)
         super.onResume()
     }
 

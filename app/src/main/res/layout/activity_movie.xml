@@ -7,15 +7,10 @@
     android:orientation="vertical"
     tools:context=".ui.MovieActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:gravity="center"
-        android:background="#222"
-        android:visibility="gone"
-        android:layout_height="?attr/actionBarSize"/>
 
+    <include layout="@layout/custom_toolbar_layout"
+        android:id="@+id/toolbarLayout"
+        android:visibility="gone"/>
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
