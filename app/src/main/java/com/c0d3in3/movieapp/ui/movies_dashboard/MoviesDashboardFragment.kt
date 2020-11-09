@@ -53,6 +53,4 @@ class MoviesDashboardFragment : Fragment()  {
     fun setSelectedMovie(movie: Movie?){
         if(movie != null) viewModel.movie.value = movie
     }
-
-    fun isInternetAvailable() : Boolean? = viewModel.isInternetAvailable.value
 }

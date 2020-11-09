@@ -16,17 +16,14 @@ import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesDashboardFragment
 import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 import com.c0d3in3.movieapp.ui.movies_dashboard.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_top_rated_movies.*
-import kotlinx.android.synthetic.main.no_network_layout.*
 
 class TopRatedMoviesFragment : Fragment(), MoviesListener{
 
     private lateinit var adapter : MoviesAdapter
     private lateinit var navController: NavController
     private lateinit var viewModel : TopRatedMoviesViewModel
-    private lateinit var parent: MoviesDashboardFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        parent = parentFragment as MoviesDashboardFragment
         super.onCreate(savedInstanceState)
     }
 
@@ -43,39 +40,19 @@ class TopRatedMoviesFragment : Fragment(), MoviesListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
 
-        handleNetworkAvailabilityUI(parent.isInternetAvailable()!!)
         adapter = MoviesAdapter(this)
         topRatedRV.layoutManager = GridLayoutManager(context, 3)
         topRatedRV.adapter = adapter
 
         viewModel.moviesList?.observe(viewLifecycleOwner, Observer{
-            if(!parent.isInternetAvailable()!! && it.isEmpty()) handleNetworkAvailabilityUI(false)
-            else handleNetworkAvailabilityUI(true)
             adapter.submitList(it)
-            if(topRatedSwipeLayout.isRefreshing) topRatedSwipeLayout.isRefreshing = false
         })
-
-        topRatedSwipeLayout.setOnRefreshListener {
-            if(topRatedSwipeLayout.isRefreshing)
-                viewModel.refreshData()
-        }
-
-        retryButton.setOnClickListener { viewModel.refreshData() }
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun openDetailedMovie(position: Int) {
+        val parent = parentFragment as MoviesDashboardFragment
         parent.setSelectedMovie(viewModel.moviesList?.value?.get(position))
         navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
-    }
-
-    private fun handleNetworkAvailabilityUI(networkAvailable: Boolean) {
-        if (networkAvailable) {
-            topRatedRV.visibility = View.VISIBLE
-            noNetworkLayout.visibility = View.GONE
-        } else {
-            topRatedRV.visibility = View.GONE
-            noNetworkLayout.visibility = View.VISIBLE
-        }
     }
 }
