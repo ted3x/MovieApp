@@ -15,6 +15,11 @@ class MoviesViewModel : ViewModel() {
     val isFavoriteMovie = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     private val repository = MovieRepositoryImpl()
+    val isInternetAvailable = MutableLiveData<Boolean>()
+
+    init {
+        isInternetAvailable.value = true
+    }
 
 
     fun checkMovieForFavorite(){

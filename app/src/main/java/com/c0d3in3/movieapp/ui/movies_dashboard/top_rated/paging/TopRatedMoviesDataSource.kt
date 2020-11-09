@@ -1,7 +1,7 @@
 package com.c0d3in3.movieapp.ui.movies_dashboard.top_rated.paging
 
 import androidx.paging.PageKeyedDataSource
-import com.c0d3in3.movieapp.data.remote.RetrofitClient
+import com.c0d3in3.movieapp.App
 import com.c0d3in3.movieapp.models.entity.Movie
 import com.c0d3in3.movieapp.models.network.MovieCollection
 import retrofit2.Call
@@ -15,7 +15,7 @@ class TopRatedMoviesDataSource : PageKeyedDataSource<Int, Movie?>() {
         callback: LoadInitialCallback<Int, Movie?>
     ) {
 
-        RetrofitClient.service.getTopRatedMovies(FIRST_PAGE)
+        App.apiService.getTopRatedMovies(FIRST_PAGE)
             .enqueue(object : Callback<MovieCollection> {
                 override fun onFailure(call: Call<MovieCollection>, t: Throwable) {
 
@@ -25,7 +25,6 @@ class TopRatedMoviesDataSource : PageKeyedDataSource<Int, Movie?>() {
                     call: Call<MovieCollection>,
                     response: Response<MovieCollection>
                 ) {
-                    println("movida top")
                     response.body()?.results?.let {
                         callback.onResult(
                             it,
@@ -49,7 +48,7 @@ class TopRatedMoviesDataSource : PageKeyedDataSource<Int, Movie?>() {
         params: LoadParams<Int>,
         callback: LoadCallback<Int, Movie?>
     ) {
-        RetrofitClient.service.getTopRatedMovies(params.key)
+        App.apiService.getTopRatedMovies(params.key)
             .enqueue(object : Callback<MovieCollection> {
                 override fun onFailure(call: Call<MovieCollection>, t: Throwable) {
                 }
@@ -58,12 +57,11 @@ class TopRatedMoviesDataSource : PageKeyedDataSource<Int, Movie?>() {
                     call: Call<MovieCollection>,
                     response: Response<MovieCollection>
                 ) {
-                    println("movida top1")
                     val key =
                         if (response.body()!!.totalPages > params.key) params.key + 1 else null
 
                     //passing the loaded data and next page value
-                    callback.onResult(response.body()!!.results, key)
+                    if(response.body() != null) callback.onResult(response.body()!!.results, key)
                 }
             })
     }

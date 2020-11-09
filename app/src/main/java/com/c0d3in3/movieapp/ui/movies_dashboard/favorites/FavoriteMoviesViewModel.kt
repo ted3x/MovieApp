@@ -18,6 +18,7 @@ class FavoriteMoviesViewModel: ViewModel() {
     init {
         val factory: DataSource.Factory<Int, Movie> =
            App.roomDatabase.movieDao().getAllPaged()
+
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setPageSize(PAGE_SIZE).build()
@@ -25,5 +26,6 @@ class FavoriteMoviesViewModel: ViewModel() {
         val pagedListBuilder: LivePagedListBuilder<Int, Movie> = LivePagedListBuilder(factory,
             pagedListConfig)
         moviesList = pagedListBuilder.build()
+
     }
 }

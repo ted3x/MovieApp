@@ -25,4 +25,8 @@ class PopularMoviesViewModel: ViewModel() {
             LivePagedListBuilder<Int, Movie>(moviesDataSourceFactory, pagedListConfig)
                 .build()
     }
+
+    fun refreshData(){
+        popularMoviesDataSource.value?.invalidate()
+    }
 }
