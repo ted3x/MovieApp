@@ -29,8 +29,10 @@ class TopRatedMoviesFragment : Fragment(), MoviesListener{
     private lateinit var adapter : MoviesAdapter
     private lateinit var navController: NavController
     private lateinit var viewModel : TopRatedMoviesViewModel
+    private lateinit var parent: MoviesDashboardFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        parent = parentFragment as MoviesDashboardFragment
         super.onCreate(savedInstanceState)
     }
 
@@ -48,6 +50,7 @@ class TopRatedMoviesFragment : Fragment(), MoviesListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
 
+        handleNetworkAvailabilityUI(parent.isInternetAvailable()!!)
         adapter = MoviesAdapter(this)
         topRatedRV.layoutManager = GridLayoutManager(context, 3)
         topRatedRV.adapter = adapter
@@ -59,7 +62,6 @@ class TopRatedMoviesFragment : Fragment(), MoviesListener{
                 adapter.submitData(it)
             }
         }
-
        topRatedSwipeLayout.setOnRefreshListener {
             if (topRatedSwipeLayout.isRefreshing)
                 adapter.refresh()
@@ -70,7 +72,16 @@ class TopRatedMoviesFragment : Fragment(), MoviesListener{
 
     override fun openDetailedMovie(movie: Movie?) {
         parent.setSelectedMovie(movie)
-        val parent = parentFragment as MoviesDashboardFragment
         navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
+    }
+
+    private fun handleNetworkAvailabilityUI(networkAvailable: Boolean) {
+        if (networkAvailable) {
+            topRatedRV.visibility = View.VISIBLE
+            noNetworkLayout.visibility = View.GONE
+        } else {
+            topRatedRV.visibility = View.GONE
+            noNetworkLayout.visibility = View.VISIBLE
+        }
     }
 }
