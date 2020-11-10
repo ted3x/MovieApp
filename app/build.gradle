@@ -15,6 +15,18 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    flavorDimensions 'default'
+    productFlavors {
+
+        Free {
+            dimension 'default'
+        }
+
+        Paid {
+            dimension 'default'
+        }
     }
 
     compileOptions {
@@ -26,9 +38,31 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        Paid {
+            res {
+                srcDirs 'src/Paid/res', 'src/Paid/res/'
+            }
+            java {
+                srcDirs 'src/Paid/java', 'src/Paid/java/'
+            }
+        }
+        Free {
+            java {
+                srcDirs 'src/Free/java', 'src/Free/java/'
+            }
+            res {
+                srcDirs 'src/Free/res', 'src/Free/res/'
+            }
         }
     }
 

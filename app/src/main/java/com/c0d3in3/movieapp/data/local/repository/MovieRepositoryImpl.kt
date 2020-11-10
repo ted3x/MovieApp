@@ -16,4 +16,8 @@ class MovieRepositoryImpl {
     fun addFavouriteMovie(movie: Movie) = movieDao.insert(movie)
 
     fun deleteFavouriteMovie(movie: Movie) = movieDao.delete(movie)
+
+    fun clearAll(){
+        movieDao.clearTable()
+    }
 }

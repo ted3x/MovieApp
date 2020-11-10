@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.c0d3in3.movieapp.FavoriteMoviesFragment
 import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.models.entity.Movie
 import com.c0d3in3.movieapp.ui.MovieActivity
 import com.c0d3in3.movieapp.ui.MoviesViewModel
 import com.c0d3in3.movieapp.ui.movies_dashboard.adapter.TabAdapter
-import com.c0d3in3.movieapp.ui.movies_dashboard.favorites.FavoriteMoviesFragment
 import com.c0d3in3.movieapp.ui.movies_dashboard.popular.PopularMoviesFragment
 import com.c0d3in3.movieapp.ui.movies_dashboard.top_rated.TopRatedMoviesFragment
 import kotlinx.android.synthetic.main.fragment_movies_dashboard.*
