@@ -24,15 +24,9 @@ import kotlinx.coroutines.launch
 
 class PopularMoviesFragment : Fragment(), MoviesListener {
 
-    private lateinit var adapter: MoviesAdapter
+    private lateinit var adapter : MoviesAdapter
     private lateinit var navController: NavController
-    private lateinit var viewModel: PopularMoviesViewModel
-    private lateinit var parent: MoviesDashboardFragment
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        parent = parentFragment as MoviesDashboardFragment
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var viewModel : PopularMoviesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +37,6 @@ class PopularMoviesFragment : Fragment(), MoviesListener {
         }
         return inflater.inflate(R.layout.fragment_popular_movies, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
 
@@ -68,17 +61,8 @@ class PopularMoviesFragment : Fragment(), MoviesListener {
     }
 
     override fun openDetailedMovie(movie: Movie?) {
+	   val parent = parentFragment as MoviesDashboardFragment
         parent.setSelectedMovie(movie)
         navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
-    }
-
-    private fun handleNetworkAvailabilityUI(networkAvailable: Boolean) {
-        if (networkAvailable) {
-            popularRV.visibility = View.VISIBLE
-            noNetworkLayout.visibility = View.GONE
-        } else {
-            popularRV.visibility = View.GONE
-            noNetworkLayout.visibility = View.VISIBLE
-        }
     }
 }

@@ -13,7 +13,6 @@ import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesSourcePaging
 import kotlinx.coroutines.flow.Flow
 
 class PopularMoviesViewModel: ViewModel() {
-
     val movies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = 20)) {
         MoviesSourcePaging(MovieTypes.POPULAR, App.apiService)
     }.flow

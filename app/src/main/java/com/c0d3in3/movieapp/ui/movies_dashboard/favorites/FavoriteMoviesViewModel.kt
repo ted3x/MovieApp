@@ -12,7 +12,6 @@ import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesSourcePaging
 import kotlinx.coroutines.flow.Flow
 
 class FavoriteMoviesViewModel: ViewModel() {
-
     val movies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = 20),
     pagingSourceFactory = {MovieRepositoryImpl().getFavouriteMovies()}  ).flow
         .cachedIn(viewModelScope)
