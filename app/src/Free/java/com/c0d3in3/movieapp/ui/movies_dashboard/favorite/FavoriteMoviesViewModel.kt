@@ -1,4 +1,4 @@
-package com.c0d3in3.movieapp
+package com.c0d3in3.movieapp.ui.movies_dashboard.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

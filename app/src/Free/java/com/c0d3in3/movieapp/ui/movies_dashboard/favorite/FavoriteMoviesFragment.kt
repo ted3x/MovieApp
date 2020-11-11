@@ -1,6 +1,5 @@
-package com.c0d3in3.movieapp
+package com.c0d3in3.movieapp.ui.movies_dashboard.favorite
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.models.entity.Movie
 import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesDashboardFragment
 import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
