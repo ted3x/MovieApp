@@ -1,6 +1,7 @@
 package com.c0d3in3.movieapp.data.local.repository
 
 import androidx.paging.PagedList
+import androidx.paging.PagingSource
 import com.c0d3in3.movieapp.App.Companion.roomDatabase
 import com.c0d3in3.movieapp.models.entity.Movie
 
@@ -10,7 +11,7 @@ class MovieRepositoryImpl {
 
     fun getMovieById(id: Int) = movieDao.findById(id)
 
-    fun getFavouriteMovies(): List<Movie> = movieDao.getAll()
+    fun getFavouriteMovies() = movieDao.getAll()
 
     fun addFavouriteMovie(movie: Movie) = movieDao.insert(movie)
 
