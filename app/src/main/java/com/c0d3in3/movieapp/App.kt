@@ -21,14 +21,21 @@ import java.util.concurrent.TimeUnit
 
 class App : Application() {
 
-    private var networkConnectionListener: NetworkConnectionListener? = null
-
     companion object{
         val roomDatabase: AppDatabase by lazy{
             AppDatabase.build(context)
         }
         lateinit var context : Context
         lateinit var apiService :ApiService
+        private var networkConnectionListener: NetworkConnectionListener? = null
+
+        fun addNetworkConnectionListener(listener: NetworkConnectionListener){
+            networkConnectionListener = listener
+        }
+
+        fun removeNetworkConnectionListener(){
+            networkConnectionListener = null
+        }
     }
 
     override fun onCreate() {
@@ -42,14 +49,6 @@ class App : Application() {
 
         apiService = retrofit.create(ApiService::class.java)
         super.onCreate()
-    }
-
-    fun addNetworkConnectionListener(listener: NetworkConnectionListener){
-        networkConnectionListener = listener
-    }
-
-    fun removeNetworkConnectionListener(){
-        networkConnectionListener = null
     }
 
 
@@ -72,11 +71,11 @@ class App : Application() {
                 get() = checkConnectivity()
 
             override fun onInternetUnavailable() {
-                networkConnectionListener?.onInternetUnavailable()
+                networkConnectionListener?.onInternetUnavailable(getString(R.string.you_are_offline))
             }
 
             override fun onInternetAvailable() {
-                networkConnectionListener?.onInternetAvailable()
+                networkConnectionListener?.onInternetAvailable(getString(R.string.back_in_online))
             }
 
         })

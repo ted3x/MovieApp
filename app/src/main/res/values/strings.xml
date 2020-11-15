@@ -15,4 +15,6 @@
     <string name="you_are_offline">You are offline!</string>
     <string name="internet_is_not_available_nplease_check_your_network_state_and_retry">Internet is not available\nPlease check your network state and retry!</string>
     <string name="retry">Retry</string>
+    <string name="free_flavor">free</string>
+    <string name="paid_flavor">paid</string>
 </resources>

@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.c0d3in3.movieapp.R
 import com.c0d3in3.movieapp.extensions.setImage
 import com.c0d3in3.movieapp.models.entity.Movie
-import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 
-class MoviesAdapter(private val listener: MoviesListener) :
+class MoviesAdapter(private val openDetailedMovie : (Int?) -> Unit) :
     PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(DiffUtilCallBack()) {
 
 
@@ -29,7 +28,7 @@ class MoviesAdapter(private val listener: MoviesListener) :
         val imageView = holder.itemView as ImageView
         item?.posterUrl?.let { imageView.setImage(it) }
         imageView.setOnClickListener {
-            listener.openDetailedMovie(item)
+            openDetailedMovie(item?.id)
         }
     }
 

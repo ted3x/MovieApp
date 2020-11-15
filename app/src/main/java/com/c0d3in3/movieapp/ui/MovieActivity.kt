@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -21,23 +22,20 @@ import kotlinx.android.synthetic.main.activity_movie.view.*
 import kotlinx.android.synthetic.main.custom_toolbar_layout.view.*
 
 
-class MovieActivity : AppCompatActivity(), NetworkConnectionListener{
+class MovieActivity : AppCompatActivity(){
 
-    private val moviesViewModel: MoviesViewModel by viewModels()
+    private lateinit var  moviesViewModel: MoviesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
 
-        val intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
-
-        val comReceiver = ConnectivityReceiver(this)
-
-        baseContext.registerReceiver(comReceiver, intentFilter)
         setSupportActionBar(toolbarLayout.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)
+
+        moviesViewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
 
         moviesViewModel.errorMessage.observe(this, Observer{
             messageLayout.visibility = View.VISIBLE
@@ -55,24 +53,9 @@ class MovieActivity : AppCompatActivity(), NetworkConnectionListener{
 
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 
-    override fun onInternetAvailable() {
-        if(moviesViewModel.isInternetAvailable.value != null)
-            if(!moviesViewModel.isInternetAvailable.value!!) moviesViewModel.errorMessage.postValue(getString(R.string.back_in_online))
-        moviesViewModel.isInternetAvailable.postValue(true)
-    }
-
-    override fun onInternetUnavailable() {
-        moviesViewModel.errorMessage.postValue(getString(R.string.you_are_offline))
-        moviesViewModel.isInternetAvailable.postValue(false)
-    }
-
-    override fun onPause() {
-        (application as App).removeNetworkConnectionListener()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        (application as App).addNetworkConnectionListener(this)
-        super.onResume()
+    fun setErrorMessage(isInternetAvailable: Boolean, errorMessage: String){
+        if(isInternetAvailable && moviesViewModel.isInternetAvailable.value!!) return
+        else moviesViewModel.errorMessage.postValue(errorMessage)
+        moviesViewModel.isInternetAvailable.postValue(isInternetAvailable)
     }
 }

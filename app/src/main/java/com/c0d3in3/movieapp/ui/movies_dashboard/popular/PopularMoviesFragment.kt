@@ -4,16 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesDashboardFragment
+import com.c0d3in3.movieapp.BaseFragment
 import com.c0d3in3.movieapp.R
-import com.c0d3in3.movieapp.models.entity.Movie
-import com.c0d3in3.movieapp.ui.movies_dashboard.MoviesListener
 import com.c0d3in3.movieapp.ui.movies_dashboard.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
 import kotlinx.android.synthetic.main.no_network_layout.*
@@ -21,39 +19,31 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class PopularMoviesFragment : Fragment(), MoviesListener {
+class PopularMoviesFragment : BaseFragment() {
 
     private lateinit var adapter: MoviesAdapter
-    private lateinit var navController: NavController
     private lateinit var viewModel: PopularMoviesViewModel
-    private lateinit var parent: MoviesDashboardFragment
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        parent = parentFragment as MoviesDashboardFragment
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.let {
-            viewModel = ViewModelProvider(it)[PopularMoviesViewModel::class.java]
-        }
+        viewModel = ViewModelProvider(this)[PopularMoviesViewModel::class.java]
         return inflater.inflate(R.layout.fragment_popular_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = Navigation.findNavController(view)
+        isInternetAvailable.observe(viewLifecycleOwner, Observer {
+            handleNetworkAvailabilityUI(it)
+        })
 
-        handleNetworkAvailabilityUI(parent.isInternetAvailable()!!)
-        adapter = MoviesAdapter(this)
+        adapter = MoviesAdapter {
+            openDetailedMovie(it)
+        }
         popularRV.layoutManager = GridLayoutManager(context, 3)
         popularRV.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.movies.collectLatest {
-                if(!parent.isInternetAvailable()!!) handleNetworkAvailabilityUI(false)
-                else handleNetworkAvailabilityUI(true)
                 if (popularSwipeLayout.isRefreshing) popularSwipeLayout.isRefreshing = false
                 adapter.submitData(it)
             }
@@ -63,17 +53,12 @@ class PopularMoviesFragment : Fragment(), MoviesListener {
             if (popularSwipeLayout.isRefreshing)
                 adapter.refresh()
         }
-        retryButton.setOnClickListener { if(parent.isInternetAvailable()!!) adapter.refresh() }
+        retryButton.setOnClickListener { adapter.refresh() }
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun openDetailedMovie(movie: Movie?) {
-        parent.setSelectedMovie(movie)
-        navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment)
-    }
-
-    private fun handleNetworkAvailabilityUI(networkAvailable: Boolean) {
-        if (networkAvailable) {
+    private fun handleNetworkAvailabilityUI(isInternetAvailable : Boolean) {
+        if (isInternetAvailable) {
             popularRV.visibility = View.VISIBLE
             noNetworkLayout.visibility = View.GONE
         } else {

@@ -22,10 +22,12 @@ android {
 
         Free {
             dimension 'default'
+            resValue("string", "current_flavor", "free")
         }
 
         Paid {
             dimension 'default'
+            resValue("string", "current_flavor", "paid")
         }
     }
 

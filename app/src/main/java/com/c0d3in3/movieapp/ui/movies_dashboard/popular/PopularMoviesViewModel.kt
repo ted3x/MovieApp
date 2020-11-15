@@ -16,5 +16,5 @@ class PopularMoviesViewModel: ViewModel() {
     val movies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = 20)) {
         MoviesSourcePaging(MovieTypes.POPULAR, App.apiService)
     }.flow
-        .cachedIn(viewModelScope)asdasd
+        .cachedIn(viewModelScope)
 }
