@@ -22,18 +22,15 @@ class MovieDetailFragment : Fragment() {
     private lateinit var viewModel : MovieDetailViewModel
     private lateinit var navController: NavController
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        activity?.let{
-            viewModel = ViewModelProvider(it)[MovieDetailViewModel::class.java]
-        }
-        viewModel.loadMovie(requireArguments().getInt("movieId"))
-        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProvider(this)[MovieDetailViewModel::class.java]
+        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        viewModel.loadMovie(requireArguments().getInt("movieId"))
+
         navController = Navigation.findNavController(view)
 
         viewModel.isFavoriteMovie.observe(viewLifecycleOwner, Observer{

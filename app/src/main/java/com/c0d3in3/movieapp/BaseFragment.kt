@@ -3,6 +3,7 @@ package com.c0d3in3.movieapp
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -66,8 +67,6 @@ abstract class BaseFragment : Fragment(), NetworkConnectionListener {
     }
 
     protected fun openDetailedMovie(movieId: Int?) {
-        val bundle = Bundle()
-        if (movieId != null) bundle.putInt("movieId", movieId)
-        navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment,bundle)
+        navController.navigate(R.id.action_moviesDashboardFragment_to_movieDetailFragment,bundleOf("movieId" to movieId))
     }
 }
