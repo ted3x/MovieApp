@@ -11,34 +11,10 @@ import kotlinx.coroutines.withContext
 
 
 class MoviesViewModel : ViewModel() {
-    val movie = MutableLiveData<Movie>()
-    val isFavoriteMovie = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
-    private val repository = MovieRepositoryImpl()
     val isInternetAvailable = MutableLiveData<Boolean>()
 
     init {
         isInternetAvailable.value = true
-    }
-
-
-    fun checkMovieForFavorite(){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                isFavoriteMovie.postValue(repository.getMovieById(movie.value?.id!!) != null)
-            }
-        }
-    }
-
-    fun handleFavoriteControl(){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                movie.value?.let {
-                    if(isFavoriteMovie.value!!) repository.deleteFavouriteMovie(it)
-                    else repository.addFavouriteMovie(it)
-                }
-                checkMovieForFavorite()
-            }
-        }
     }
 }

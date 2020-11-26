@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.c0d3in3.movieapp.R
@@ -18,17 +19,18 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 class MovieDetailFragment : Fragment() {
 
 
-    private val viewModel by activityViewModels<MoviesViewModel>()
+    private lateinit var viewModel : MovieDetailViewModel
     private lateinit var navController: NavController
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProvider(this)[MovieDetailViewModel::class.java]
+        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        viewModel.loadMovie(requireArguments().getInt("movieId"))
+
         navController = Navigation.findNavController(view)
 
         viewModel.isFavoriteMovie.observe(viewLifecycleOwner, Observer{
@@ -42,7 +44,7 @@ class MovieDetailFragment : Fragment() {
             }
         })
 
-        viewModel.movie.observe(viewLifecycleOwner, Observer{
+        viewModel.selectedMovie.observe(viewLifecycleOwner, Observer{
             (activity as MovieActivity).setToolbarTitle(it.title, true)
             backDropPoster.setImage(it.posterUrl)
             releaseDate.text = "Release date: ${it.releaseDate}"
@@ -50,8 +52,6 @@ class MovieDetailFragment : Fragment() {
             originalTitle.text = "Original title: ${it.originalTitle}"
             overview.text = it.overview
         })
-
-        viewModel.checkMovieForFavorite()
 
         favoriteButton.setOnClickListener{
             viewModel.handleFavoriteControl()

@@ -17,7 +17,6 @@ import com.c0d3in3.movieapp.ui.MoviesViewModel
 
 class SplashScreenFragment : Fragment() {
 
-    private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var handler: Handler
     private lateinit var navController: NavController
     private lateinit var runnable: Runnable
@@ -26,9 +25,6 @@ class SplashScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         handler = Handler()
-        activity?.let {
-            moviesViewModel = ViewModelProvider(it)[MoviesViewModel::class.java]
-        }
         return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
 

@@ -36,5 +36,9 @@
         <action
             android:id="@+id/action_movieDetailFragment_to_moviesDashboardFragment"
             app:destination="@id/moviesDashboardFragment" />
+        <argument
+            android:name="movieId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>
